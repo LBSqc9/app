@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>法律计算器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/static/plugins/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <style>
+        .object {
+            color: rgba(0, 0, 0, 0.7) !important;
+            transition-duration: 0.2s !important;
+            text-align: center;
+        }
+
+        .object:hover {
+            font-weight: 700 !important;
+            cursor: pointer;
+            background-color: #2185D0 !important;
+            border: none;
+            box-shadow: 0px 1px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+            color: rgba(255, 255, 255, 1) !important;
+            transform: scale(1.005);
+        }
+    </style>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            <img class="logo" src="https://service.ecnu.edu.cn/_layouts/15/ecnu/assets/media/logos/logo.png"
+                 style="margin-right:1.5em">
+            LawGPT 法律计算器
+        </a>
+        <a href="/" class="item">首页</a>
+        <div class="ui simple dropdown item">
+            功能 <i class="dropdown icon"></i>
+            <div class="menu">
+
+                <a class="item" href="/script">裁判文书</a>
+
+                <a class="item" href="#">起诉状</a>
+
+                <a class="item" href="/calculator">计算器</a>
+
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/login">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui vertical stripe segment" style="width:100%;height:100%;">
+    <div class="ui text container" style="margin-top:15%;">
+    <div class="row" style="text-align: center;margin-bottom: 10%">
+        <h2 class="ui header" style="font-size: 2em;margin: auto;">请选择你关心的法律问题</h2>
+    </div>
+
+    <div class="ui three cards">
+        <div class="card">
+            <a href="/calculator/work" class="content object">
+                <i class="fa fa-suitcase"></i> 劳动人事
+            </a>
+            <a class="content object">
+                <i class="fa fa-gavel"></i> 侵权损害
+            </a>
+            <a class="content object">
+                <i class="fas fa-car-crash"> </i> 交通事故
+            </a>
+
+        </div>
+        <div class="card">
+            <div class="content object">
+                <i class="fas fa-ring"></i> 婚姻家庭
+
+            </div>
+            <div class="content object">
+                <i class="fas fa-hand-holding-usd"></i> 遗产继承
+            </div>
+
+            <a href="/calculator/borrow" class="content object">
+                <i class="fas fa-sack-dollar"></i> 民间借贷
+            </a>
+
+
+        </div>
+        <div class="card">
+            <div class="content object">
+                <i class="fas fa-hands-helping"></i> 法律服务
+            </div>
+            <div class="content object">
+                <i class="fas fa-home"></i> 房产交易
+            </div>
+            <div class="content object">
+                <i class="fas fa-chart-line"></i> 投资回报
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+</html>
