@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>民间借贷计算器</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <style>
+        .object {
+            color: rgba(0, 0, 0, 0.7) !important;
+            transition-duration: 0.2s;
+        }
+
+        .object:hover {
+            font-weight: 700;
+            cursor: pointer;
+            background-color: #2185D0 !important;
+            border: none;
+            box-shadow: 0px 1px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+            color: rgba(255, 255, 255, 1) !important;
+            transform: scale(1.005);
+        }
+        .result{
+            display:none;
+            animation: appear 0.5s 1;
+        }
+        @keyframes appear {
+            0%{opacity: 0;}
+            100%{opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            <img class="logo" src="https://service.ecnu.edu.cn/_layouts/15/ecnu/assets/media/logos/logo.png"
+                 style="margin-right:1.5em">
+            LawGPT 民间借贷计算器
+        </a>
+        <a href="/" class="item">首页</a>
+        <div class="ui simple dropdown item">
+            功能 <i class="dropdown icon"></i>
+            <div class="menu">
+
+                <a class="item" href="/script">裁判文书</a>
+
+                <a class="item" href="#">起诉状</a>
+
+                <a class="item" href="/calculator">计算器</a>
+
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/login">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui main text container" style="margin-top:8em;margin-bottom: 8em">
+    <h1 class="ui header" style="margin-bottom: 5%;text-align: center">借款利息计算</h1>
+
+    <div class="ui form segment">
+        <div class="two fields">
+            <div class="field">
+                <label>请输入您的借款本金</label>
+                <div class=" ui right labeled input">
+                    <input type="text"  id="mainmoney">
+                    <div class="ui basic label">
+                        元
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>请输入借款期限</label>
+                <div class=" ui right labeled input">
+                    <input type="text" id="ddl">
+                    <div class="ui basic label">
+                        月
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="grouped fields">
+                <label>请选择约定的计息方式</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method1" checked="checked" value="1">
+                        <label>按月计息</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method1" value="2">
+                        <label>按年计息</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="field">
+            <label>请输入约定的利息计算标准</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="rate">
+                <div class="ui basic label">
+                    %
+                </div>
+            </div>
+        </div>
+        <div class="field">
+
+            <div class="grouped fields">
+                <label>请选择还款方式</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method" checked="checked" value="一次性偿还本金和利息">
+                        <label>一次性偿还本金和利息</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method" value="按月付息，到期还本">
+                        <label>按月付息，到期还本</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method" value="等额本息还款">
+                        <label>等额本息还款</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="method" value="等额本金还款">
+                        <label>等额本金还款</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center">
+            <input class="ui primary submit button" style="margin:auto" type="submit" onclick="display_result()">
+        </div>
+
+        <div class="ui error message">
+        </div>
+    </div>
+
+
+    <div class="ui segment result" id="result">
+        <h3 class="ui header" style="margin-bottom: 2%;text-align: center">本次计算结果</h3>
+        <div class="ui divider" style="margin-bottom: 5%"></div>
+        <div class="ui four column grid">
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">借款金额：</h5>
+                </div>
+                <div class="column"><span id="result_main_money"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">借款期限:</h5>
+                </div>
+                <div class="column"><span id="result_ddl"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">月利率：</h5>
+                </div>
+                <div class="column"><span id="month_rate"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">年利率：</h5>
+                </div>
+                <div class="column"><span id="year_rate"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">还款方式:</h5>
+                </div>
+                <div class="column"><span id="result_method"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">每月利息:</h5>
+                </div>
+                <div class="column"><span id="month_profit"></span></div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">利息总额:</h5>
+                </div>
+                <div class="column"><span id="sum_profit"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">本息合计</h5>
+                </div>
+                <div class="column"><span id="sum_repay"></span></div>
+            </div>
+
+        </div>
+        <div class="grid one column">
+            <div class="column" style="color:grey">
+                免责申明：该结论仅基于您所填选项作出，不对实际情况作出任何保证和承诺，亦不构成法律意见，仅供您参考。您对该结论有任何问题，请联系我们。
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:5%">
+
+</div>
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+<script>
+    function display_result(){
+        document.getElementById("result").style.display='block';
+        let count = document.getElementById("mainmoney");
+        document.getElementById("result_main_money").innerHTML = count.value;
+        let ddl = document.getElementById("ddl");
+        document.getElementById("result_ddl").innerHTML = ddl.value;
+        var date = document.getElementsByName("method1");
+        var month_rate;
+        var year_rate;
+        var rate = document.getElementById("rate");
+        if (date[0].checked == true){
+            month_rate = rate.value;
+            year_rate = rate.value*12;
+        }else{
+            month_rate= rate.value/12;
+            year_rate = rate.value;
+        }
+        document.getElementById("month_rate").innerHTML = month_rate+"%";
+        document.getElementById("year_rate").innerHTML = year_rate+"%";
+
+        var method = document.getElementsByName("method");
+        var len = method.length;
+        for (var i = 0;i < len;i++){
+            if (method[i].checked == true){
+                document.getElementById("result_method").innerHTML = method[i].value;
+            }
+        }
+        document.getElementById("month_profit").innerHTML = count.value*month_rate/100 + "%";
+        document.getElementById("sum_profit").innerHTML = count.value * month_rate / 100 * ddl.value;
+        document.getElementById("sum_repay").innerHTML = count.value * month_rate / 100 * ddl.value + count.value;
+    }
+</script>
+</html>
+
+
+
+
+

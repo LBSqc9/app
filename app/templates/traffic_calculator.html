@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交通肇事计算器</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <style>
+        .object {
+            color: rgba(0, 0, 0, 0.7) !important;
+            transition-duration: 0.2s;
+        }
+
+        .object:hover {
+            font-weight: 700;
+            cursor: pointer;
+            background-color: #2185D0 !important;
+            border: none;
+            box-shadow: 0px 1px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+            color: rgba(255, 255, 255, 1) !important;
+            transform: scale(1.005);
+        }
+
+        .result {
+            display: none;
+            animation: appear 0.5s 1;
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            <img class="logo" src="https://service.ecnu.edu.cn/_layouts/15/ecnu/assets/media/logos/logo.png"
+                 style="margin-right:1.5em">
+            LawGPT 交通肇事计算器
+        </a>
+        <a href="/" class="item">首页</a>
+        <div class="ui simple dropdown item">
+            功能 <i class="dropdown icon"></i>
+            <div class="menu">
+
+                <a class="item" href="/script">裁判文书</a>
+
+                <a class="item" href="#">起诉状</a>
+
+                <a class="item" href="/calculator">计算器</a>
+
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/login">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui main text container" style="margin-top:8em;margin-bottom: 8em">
+    <h1 class="ui header" style="margin-bottom: 5%;text-align: center">交通肇事计算</h1>
+
+    <div class="ui form segment">
+
+        <div class="field">
+            <label>请输入被害人就医治疗医疗费用：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="yiliao">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>请输入被害人的固定收入，若无固定收入请输入近三年的平均收入，或者相同行业年度职工平均工资（月）：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="wugong_fee">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>请输入被害人误工时长（月）：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="wugong_time">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label>请输入护理家属的固定收入，若无固定收入请输入近三年的平均收入，或者相同行业年度职工平均工资（月）：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="huli_fee">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>请输入护理时长：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="huli_time">
+                <div class="ui basic label">
+                    月
+                </div>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label>请输入地区国家机关一般工作人员的出差伙食补助标准（天）：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="huoshi">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>请输入被害人及必要的护理人员因就医或专员发生的费用（需提供发票）：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="jiaotong">
+                <div class="ui basic label">
+                    元
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center">
+            <input class="ui primary submit button" style="margin:auto" type="submit" onclick="display_result()">
+        </div>
+
+        <div class="ui error message">
+        </div>
+    </div>
+
+
+    <div class="ui segment result" id="result">
+        <h3 class="ui header" style="margin-bottom: 2%;text-align: center">本次计算结果</h3>
+        <div class="ui divider" style="margin-bottom: 5%"></div>
+        <div class="ui four column grid">
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付医疗费：</h5>
+                </div>
+                <div class="column"><span id="1"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付误工费：</h5>
+                </div>
+                <div class="column"><span id="2"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付护理费：</h5>
+                </div>
+                <div class="column"><span id="3"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付住院伙食补助费：</h5>
+                </div>
+                <div class="column"><span id="4"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付营养费：</h5>
+                </div>
+                <div class="column"><span id="5"></span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h5 class="ui header">对方应支付交通费：</h5>
+                </div>
+                <div class="column"><span id="6"></span></div>
+            </div>
+
+
+        </div>
+        <div class="grid one column">
+            <div class="column" style="color:grey">
+                免责申明：该结论仅基于您所填选项作出，不对实际情况作出任何保证和承诺，亦不构成法律意见，仅供您参考。您对该结论有任何问题，请联系我们。
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:5%">
+
+</div>
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+<script>
+    function display_result() {
+        document.getElementById("result").style.display = 'block';
+        let yiliao = document.getElementById("yiliao").value;
+        var wugong_fee = document.getElementById("wugong_fee").value;
+        var wugong_time = document.getElementById("wugong_time").value;
+        var huli_fee = document.getElementById("huli_fee").value;
+        var huli_time = document.getElementById("huli_time").value;
+        var huoshi = document.getElementById("huoshi").value;
+        var jiaotong = document.getElementById("jiaotong").value;
+        document.getElementById("1").innerHTML = yiliao;
+        document.getElementById("2").innerHTML = wugong_fee * wugong_time;
+        document.getElementById("3").innerHTML = huli_fee * huli_time;
+        document.getElementById("4").innerHTML = huoshi*30*wugong_time;
+        document.getElementById("5").innerHTML = 50*50*wugong_time;
+        document.getElementById("6").innerHTML = jiaotong;
+    }
+</script>
+</html>
+
+
+
+
+

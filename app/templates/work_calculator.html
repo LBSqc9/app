@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工伤赔偿计算器</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <style>
+        .object {
+            color: rgba(0, 0, 0, 0.7) !important;
+            transition-duration: 0.2s;
+        }
+
+        .object:hover {
+            font-weight: 700;
+            cursor: pointer;
+            background-color: #2185D0 !important;
+            border: none;
+            box-shadow: 0px 1px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+            color: rgba(255, 255, 255, 1) !important;
+            transform: scale(1.005);
+        }
+
+        .result {
+            display: none;
+            animation: appear 0.5s 1;
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            <img class="logo" src="https://service.ecnu.edu.cn/_layouts/15/ecnu/assets/media/logos/logo.png"
+                 style="margin-right:1.5em">
+            LawGPT 工伤赔偿计算器
+        </a>
+        <a href="/" class="item">首页</a>
+        <div class="ui simple dropdown item">
+            功能 <i class="dropdown icon"></i>
+            <div class="menu">
+
+                <a class="item" href="/script">裁判文书</a>
+
+                <a class="item" href="#">起诉状</a>
+
+                <a class="item" href="/calculator">计算器</a>
+
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/login">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui main text container" style="margin-top:8em;margin-bottom: 8em">
+    <h1 class="ui header" style="margin-bottom: 5%;text-align: center">工伤赔偿计算</h1>
+
+    <div class="ui form segment">
+        <div class="field">
+            <div class="grouped fields">
+                <label>是否因工伤去世</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="live" checked="checked" value="1">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="live" value="2">
+                        <label>否</label>
+                    </div>
+                </div>
+                text
+            </div>
+        </div>
+
+        <div class="field">
+            <label>请输入伤残等级：(1-10)：</label>
+            <div class=" ui right labeled input">
+                <input type="text" id="level">
+                <div class="ui basic label">
+                    级
+                </div>
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field">
+                <label>请输入病前12个月平均月缴费工资：</label>
+                <div class=" ui right labeled input">
+                    <input type="text" id="salary">
+                    <div class="ui basic label">
+                        元
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>请输入地区平均工资：</label>
+                <div class=" ui right labeled input">
+                    <input type="text" id="average">
+                    <div class="ui basic label">
+                        元
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="two fields">
+            <div class="field">
+                <div class="grouped fields">
+                    <label>是否缴纳工伤保险：</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="insurance" checked="checked" value=1>
+                            <label>是</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="insurance" value=0>
+                            <label>否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="grouped fields">
+                    <label>是否离职</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="leave" checked="checked" value=1>
+                            <label>是</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="leave" value=0>
+                            <label>否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field">
+                <label>请输入您的年龄：</label>
+                <div class=" ui right labeled input">
+                    <input type="text" id="age">
+                    <div class="ui basic label">
+                        岁
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>停工留薪时间:</label>
+                <div class=" ui right labeled input">
+                    <input type="text" id="time">
+                    <div class="ui basic label">
+                        月
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+
+            <div class="grouped fields">
+                <label>生活自理程度</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="life" checked="checked" value="3">
+                        <label>完全不能自理</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="life" value="2">
+                        <label>大部分不能自理</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="life" value=1>
+                        <label>部分不能自理</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="grouped fields">
+                <label>请输入与伤者关系</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="rela" checked="checked" value=2>
+                        <label>配偶关系</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="rela" value=1>
+                        <label>其他关系</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="grouped fields">
+                <label>是否是孤寡老人或孤儿</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="lon" checked="checked" value=1>
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="lon" value=0>
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center">
+            <input class="ui primary submit button" style="margin:auto" type="submit" onclick="display_result()">
+        </div>
+
+        <div class="ui error message">
+        </div>
+    </div>
+
+
+    <div class="ui segment result" id="result">
+        <h3 class="ui header" style="margin-bottom: 2%;text-align: center">本次计算结果</h3>
+        <div class="ui divider" style="margin-bottom: 5%"></div>
+        <div class="ui four column grid">
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">一次性伤残补助金为：</h5>
+                </div>
+                <div class="column"><span id="1"></span></div>
+            </div>
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">按月支付的伤残津贴每月为：</h5>
+                </div>
+                <div class="column"><span id="2"></span></div>
+            </div>
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">5-10级一次性工伤医疗补助金为：</h5>
+                </div>
+                <div class="column"><span id="3"></span></div>
+            </div>
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">5-10级一次性伤残就业补助金：</h5>
+                </div>
+                <div class="column"><span id="4"></span></div>
+            </div>
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">停工留薪期工资为：</h5>
+                </div>
+                <div class="column"><span id="5"></span></div>
+            </div>
+            <div class="row" name="item1">
+                <div class="column">
+                    <h5 class="ui header">停工留薪期护理费：</h5>
+                </div>
+                <div class="column"><span id="6"></span></div>
+            </div>
+
+            <div class="row" name="item2">
+                <div class="column">
+                    <h5 class="ui header">丧葬补助金：</h5>
+                </div>
+                <div class="column"><span id="7"></span></div>
+            </div>
+            <div class="row" name="item2">
+                <div class="column">
+                    <h5 class="ui header">供养亲属抚恤金（每月）：</h5>
+                </div>
+                <div class="column"><span id="8"></span></div>
+            </div>
+
+            <div class="row" name="item2">
+                <div class="column">
+                    <h5 class="ui header">一次性工亡补助金：</h5>
+                </div>
+                <div class="column"><span id="9"></span></div>
+            </div>
+
+
+        </div>
+        <div class="grid one column">
+            <div class="column" style="color:grey">
+                免责申明：该结论仅基于您所填选项作出，不对实际情况作出任何保证和承诺，亦不构成法律意见，仅供您参考。您对该结论有任何问题，请联系我们。
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:5%">
+
+</div>
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+<script>
+    function display_result() {
+        var item1s = document.getElementsByName("item1");
+        for (var i = 0; i < item1s.length; i++) {
+            item1s[i].style.display = "none";
+        }
+        var item2s = document.getElementsByName("item2");
+        for (var i = 0; i < item2s.length; i++) {
+            item2s[i].style.display = "none";
+        }
+        document.getElementById("result").style.display = 'block';
+        var live = document.getElementsByName("live");
+        var level = document.getElementById("level").value;
+        var salary = document.getElementById("salary").value;
+        var average = document.getElementById("average").value;
+        var insurance = document.getElementsByName("insurance");
+        if (insurance[0].checked) insurance = insurance[0].value;
+        else insurance = insurance[1].value;
+        var leave = document.getElementsByName("leave");
+        if (leave[0].checked) leave = leave[0].value;
+        else leave = leave[1].value;
+        var age = document.getElementById("age").value;
+        var time = document.getElementById("time").value;
+        var life = document.getElementsByName("life");
+        for (var i = 0; i < 3; i++)
+            if (life[i].checked == true) {
+                life = life[i].value;
+                break;
+            }
+        var rela = document.getElementsByName("rela");
+        if (rela[0].checked) rela = rela[0].value;
+        else rela = rela[1].value;
+        var lon = document.getElementsByName("lon");
+        if (lon[0].checked) lon = lon[0].value;
+        else lon = lon[1].value;
+
+        if (live[0].checked == true)
+        {
+
+            for (var i = 0; i < item2s.length; i++) {
+                item2s[i].style.display = "block";
+            }
+            document.getElementById("7").style.display = 'block';
+            document.getElementById("7").innerHTML = average * 6;
+            document.getElementById("8").innerHTML = (rela + lon + 1 + 1) * 0.1 * average;
+            document.getElementById("9").innerHTML = average * 20;
+        }
+        else {
+            for (var i = 0; i < item1s.length; i++) {
+                item1s[i].style.display = "block";
+            }
+            document.getElementById("5").innerHTML = time * salary * (1 - leave);
+            document.getElementById("6").innerHTML = life * average + 2 * average;
+
+            var new_sal = salary;
+            if (salary >= average * 3) new_sal = average * 3;
+            else if (salary <= average * 0.6) new_sal = average * 0.6;
+            document.getElementById("1").innerHTML = insurance * new_sal * (29 - 2 * level);
+
+            document.getElementById("2").innerHTML = 0;
+            if (4 < level && level <= 6)
+                if (salary >= average)
+                    document.getElementById("2").innerHTML = insurance * level * salary;
+                else
+                    document.getElementById("2").innerHTML = insurance * level * average;
+            if (1 <= level && level <= 4)
+                if (salary >= average)
+                    document.getElementById("2").innerHTML = insurance * level * salary;
+                else
+                    document.getElementById("2").innerHTML = insurance * level * average;
+            document.getElementById("3").innerHTML = "无";
+            document.getElementById("4").innerHTML = "无";
+            if (5 <= level && level <= 10) {
+                document.getElementById("3").innerHTML = insurance * (78 - age) * level * average;
+                document.getElementById("4").innerHTML = (78 - age) * level * average;
+            }
+
+        }
+    }
+</script>
+</html>
+
+
+
+
+

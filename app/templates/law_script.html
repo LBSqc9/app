@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <title>文书写作</title>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            <img class="logo" src="https://service.ecnu.edu.cn/_layouts/15/ecnu/assets/media/logos/logo.png"
+                 style="margin-right:1.5em">
+            LawGPT 文书写作
+        </a>
+        <a href="/" class="item">首页</a>
+        <div class="ui simple dropdown item">
+            功能 <i class="dropdown icon"></i>
+            <div class="menu">
+
+                <a class="item" href="/script">裁判文书</a>
+
+                <a class="item" href="#">起诉状</a>
+
+                <a class="item" href="/calculator">计算器</a>
+
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/login">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui main text container" style="margin:8em 0;">
+    <h1 class="ui header" style="margin-bottom: 5%;text-align: center">LawGpt 文书写作</h1>
+
+    <form class="ui form segment" action="/script" method="post">
+        <div class="two fields">
+            <div class="field">
+                <label>原告</label>
+                <input type="text" name="yuangao">
+            </div>
+            <div class="field">
+                <label>被告</label>
+                <input type="text" name="beigao">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>案件来源</label>
+            <input type="text" name="source">
+        </div>
+        <div class="field">
+            <label>承办法庭</label>
+            <input type="text" name="court">
+        </div>
+        <div class="field">
+            <label>原告起诉状</label>
+            <textarea type="text" name="test_yuangao" style="word-break: break-all"> </textarea>
+        </div>
+        <div class="field">
+            <label>基本事实</label>
+            <textarea type="text" name="fact" style="word-break: break-all"> </textarea>
+        </div>
+        <div class="field">
+            <label>承办法官、书记员</label>
+            <input type="text" name="writer">
+        </div>
+        <div style="text-align: center">
+            <input class="ui primary submit button" style="margin:auto" type="submit">
+        </div>
+
+        <div class="ui error message">
+        </div>
+    </form>
+
+</div>
+<div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui stackable inverted divided grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 1</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 2</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 3</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">Footer Header</h4>
+                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <img src="assets/images/logo.png" class="ui centered mini image">
+        <div class="ui horizontal inverted small divided link list">
+            <a class="item" href="#">Site Map</a>
+            <a class="item" href="#">Contact Us</a>
+            <a class="item" href="#">Terms and Conditions</a>
+            <a class="item" href="#">Privacy Policy</a>
+        </div>
+    </div>
+</div>
+<div>
+
+</div>
+
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+</html>

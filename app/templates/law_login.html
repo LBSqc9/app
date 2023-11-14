@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/semantic/semantic.min.css">
+    <style>
+        .local-body {
+            -webkit-text-size-adjust: 100%;
+            box-sizing: inherit;
+            font-size: 15px;
+            line-height: 1.4285em;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            min-width: 320px;
+            background: #FFF;
+            font-family: 'Open Sans', 'Helvetica Neue', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Hiragino Kaku Gothic Pro", Meiryo, "Noto Sans CJK SC", "WenQuanYi Micro Hei", Arial, Helvetica, sans-serif;
+            color: rgba(0, 0, 0, .87);
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            border: red 1px solid;
+        }
+
+        img.context {
+            z-index: -1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            height: auto;
+            min-height: 100%;
+            min-width: 100%;
+            max-height: none;
+            max-width: none;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            display: block;
+            border: red 1px solid;
+        }
+
+        .masthead h1.ui.header {
+            margin-bottom: 0em;
+            font-size: 3em;
+            font-weight: normal;
+        }
+
+        .masthead .ui.menu .ui.button {
+            margin-left: 0.5em;
+        }
+
+        .masthead.segment {
+            min-height: 700px;
+            padding: 1em 0;
+            background: rgba(0, 0, 0, .0) !important;
+            text-shadow: 0 0 10px rgba(0, 0, 0, .4);
+            overflow: hidden;
+        }
+
+        .ui .text {
+            padding-top: 3em;
+            padding-bottom: 2em;
+            margin-top: 4em;
+
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+
+
+        }
+
+        @font-face {
+            font-family: shangwei;
+            src: url("/static/font/庞门正道标题体2.0增强版.ttf")
+        }
+
+        .fontcss {
+            left: 845px;
+            top: 382px;
+            width: 66px;
+            height: 23px;
+            opacity: 1;
+            /** 文本1 */
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 0;
+            line-height: 42px;
+            margin-right: 1em;
+            color: rgba(0, 0, 0, 1);
+            text-align: center;
+            vertical-align: top;
+            color: white;
+            font-family: shangwei;
+        }
+
+        .ui .input .form-control {
+            opacity: 0.7;
+            border-radius: 10px;
+            background: rgba(204, 204, 204, 0.7);
+
+            border: 1px solid rgba(255, 255, 255, 1);
+
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 2px 4px rgba(0, 0, 0, 0.25);
+            color: white;
+        }
+
+        .frame {
+            left: 798px;
+            top: 340px;
+            width: 379px;
+            height: 158px;
+            opacity: 1;
+            border-radius: 10px;
+            background: rgba(204, 204, 204, 0);
+
+            border: 2px solid rgba(255, 255, 255, 1);
+
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .ui.button {
+            font-family: shangwei;
+            margin-top: 10px;
+            color: rgba(0, 0, 0, 1);!important;
+            opacity: 0.8;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="local-body">
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <img src="https://acm.ecnu.edu.cn/static/image/bg/1.jpg" class="context">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item" href="/">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a class="active item" href="/">Home</a>
+                <a class="item">Work</a>
+                <a class="item">Company</a>
+                <a class="item">Careers</a>
+                <div class="right item">
+                    <a class="ui inverted button">Log in</a>
+                    <a class="ui inverted button">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui text container">
+            <form>
+                <h1 class="ui inverted header" style="font-family: shangwei">
+                    登录你的账户
+                </h1>
+                <div style="margin:15px;">
+                    <h3 style="color:black;border:black 1px solid;border-radius: 30px;display:inline-block;background-color: white;padding:0.5em">
+                        没有账户？免费注册一个</h3>
+                </div>
+                <div style="margin:15px;">
+                    <div class="frame"
+                         style="border-radius: 15px;border: white solid 1px;display: inline-block;padding:1em">
+                        <div class="ui input" style="display:block;padding:0.7em">
+                            <label for="exampleInputEmail1" class="fontcss">用户账号</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入账号">
+                        </div>
+                        <div class="ui input" style="display:block;padding:0.7em">
+                            <label for="exampleInputPassword1" class="fontcss">用户密码</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="请输入密码">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="ui inverted large button">登录</div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="/static/plugins/semantic/semantic.min.js"></script>
+</html>
